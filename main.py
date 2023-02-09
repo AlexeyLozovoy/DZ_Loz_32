@@ -3,6 +3,7 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.orm import Session
 from sqlalchemy import ForeignKey
+# import sqlalchemy  
 from sqlalchemy.orm import relationship
 
 class Base(DeclarativeBase):
@@ -87,7 +88,7 @@ with Session(engine) as session:
     St3 = Department(Financing=30000, Name="Department3")
     
     St4 = Facultie(Dean="Dean1", Name="Facultie1")
-    St5 = Facultie(Dean="Dean2", Name="Facultie2")
+    St5 = Facultie(Dean="Dean2", Name="Computer Science")
     St6 = Facultie(Dean="Dean3", Name="Facultie3")
 
     St7 = Group(Name="Group1", Rating=1, Year=1)
@@ -112,5 +113,35 @@ with Session(engine) as session:
     St1.faculties.append(St5)
     session.commit()
 
-    
-    print((St1.ID, St1.Financing, St1.Name))
+# 1. Вывести таблицу кафедр, но расположить ее поля в
+# обратном порядке.
+    ame = session.query(Department).all()
+    print(ame)
+    ame.reverse()
+    print(ame)
+
+# 2. Вывести названия групп и их рейтинги с уточнением
+# имен полей именем таблицы.
+    ame = session.query(Group.Name, Group.Rating).all()
+    print(ame)
+   
+# 3. Вывести для преподавателей их фамилию, процент
+# ставки по отношению к надбавке и процент ставки
+# по отношению к зарплате (сумма ставки и надбавки).
+# 4. Вывести таблицу факультетов в виде одного поля в
+# следующем формате: “The dean of faculty [faculty] is
+# [dean].”.
+# 5. Вывести фамилии преподавателей, которые являются
+# профессорами и ставка которых превышает 1050.
+    ame = session.query(Teacher.LastName).filter(Teacher.IsProfessor == 1).filter(Teacher.Salary > 1050).all()
+    print(ame)
+
+# 6. Вывести названия кафедр, фонд финансирования
+# которых меньше 11000 или больше 25000.
+    ame = session.query(Department.Name).filter(Department.Financing > 11000).filter(Department.Financing < 25000).all()
+    print(ame)
+
+# 7. Вывести названия факультетов кроме факультета
+# “Computer Science”.
+    ame = session.query(Facultie.Name).filter(Facultie.Name != "Computer Science").all()
+    print(ame)
