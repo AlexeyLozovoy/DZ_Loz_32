@@ -95,9 +95,9 @@ with Session(engine) as session:
     St8 = Group(Name="Group2", Rating=2, Year=2)
     St9 = Group(Name="Group3", Rating=3, Year=3)
 
-    St10 = Teacher(FirstName = "Teacher1", LastName = "Teacher1", EmploymentDate = "2015-09-07", IsAssistant = 1, IsProfessor = 0,Position = "Position1", Premium = 100, Salary  = 1000)
-    St11 = Teacher(FirstName = "Teacher2", LastName = "Teacher2", EmploymentDate = "2016-09-07", IsAssistant = 0, IsProfessor = 1,Position = "Position2", Premium = 200, Salary  = 2000)
-    St12 = Teacher(FirstName = "Teacher3", LastName = "Teacher3", EmploymentDate = "2017-09-07", IsAssistant = 0, IsProfessor = 0,Position = "Position3", Premium = 300, Salary  = 3000)
+    St10 = Teacher(FirstName = "Teacher1", LastName = "Teacher1", EmploymentDate = "2015-09-07", IsAssistant = 1, IsProfessor = 0,Position = "Position1", Premium = 100, Salary  = 900)
+    St11 = Teacher(FirstName = "Teacher2", LastName = "Teacher2", EmploymentDate = "2016-09-07", IsAssistant = 0, IsProfessor = 1,Position = "Position2", Premium = 200, Salary  = 2100)
+    St12 = Teacher(FirstName = "Teacher3", LastName = "Teacher3", EmploymentDate = "2017-09-07", IsAssistant = 0, IsProfessor = 0,Position = "Position3", Premium = 300, Salary  = 3300)
 
     session.add_all([St1, St2, St3, St4, St5, St6, St7, St8, St9, St10, St11, St12])
     session.commit()
@@ -128,9 +128,28 @@ with Session(engine) as session:
 # 3. Вывести для преподавателей их фамилию, процент
 # ставки по отношению к надбавке и процент ставки
 # по отношению к зарплате (сумма ставки и надбавки).
+    amee = session.query(Teacher.ID).all()
+    fam = session.query(Teacher.LastName).all()
+    ame = session.query(Teacher.Salary).all()
+    am = session.query(Teacher.Premium).all()
+    for i in amee:
+        ii = (i[0] - 1)
+        print(ii)
+        pskn = 100 * (am[ii])[0] / (ame[ii])[0]
+        pskz = 100 * (ame[ii])[0] / ((am[ii])[0] + (ame[ii])[0])
+        print("LastName:", (fam[ii])[0],"% надбавки", pskn , "% к зарплате",  pskz)
+
 # 4. Вывести таблицу факультетов в виде одного поля в
 # следующем формате: “The dean of faculty [faculty] is
 # [dean].”.
+    amee = session.query(Facultie.ID).all()
+    ame = session.query(Facultie.Name).all()
+    am = session.query(Facultie.Dean).all()
+    for i in amee:
+        ii = (i[0] - 1)
+        print(ii)
+        print("The dean of faculty", (ame[ii])[0], "is", (am[ii])[0], ".")
+
 # 5. Вывести фамилии преподавателей, которые являются
 # профессорами и ставка которых превышает 1050.
     ame = session.query(Teacher.LastName).filter(Teacher.IsProfessor == 1).filter(Teacher.Salary > 1050).all()
