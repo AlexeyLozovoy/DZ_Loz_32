@@ -134,7 +134,6 @@ with Session(engine) as session:
     am = session.query(Teacher.Premium).all()
     for i in amee:
         ii = (i[0] - 1)
-        print(ii)
         pskn = 100 * (am[ii])[0] / (ame[ii])[0]
         pskz = 100 * (ame[ii])[0] / ((am[ii])[0] + (ame[ii])[0])
         print("LastName:", (fam[ii])[0],"% надбавки", pskn , "% к зарплате",  pskz)
@@ -147,7 +146,6 @@ with Session(engine) as session:
     am = session.query(Facultie.Dean).all()
     for i in amee:
         ii = (i[0] - 1)
-        print(ii)
         print("The dean of faculty", (ame[ii])[0], "is", (am[ii])[0], ".")
 
 # 5. Вывести фамилии преподавателей, которые являются
